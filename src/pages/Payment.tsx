@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Upload, CheckCircle2, MessageCircle, ImageIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
 import { useTransitionNav } from "@/hooks/useTransitionNav";
@@ -16,6 +18,7 @@ export default function Payment() {
   const { state, total } = useBooking();
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [agreedTerms, setAgreedTerms] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { loading, go } = useTransitionNav(900);
 
@@ -44,6 +47,10 @@ export default function Payment() {
   const sendToWhatsApp = () => {
     if (!file) {
       toast.error("Please upload your payment screenshot first");
+      return;
+    }
+    if (!agreedTerms) {
+      toast.error("Please accept the Terms & Conditions to continue");
       return;
     }
     const url = `https://wa.me/${OWNER_WHATSAPP}?text=${buildMessage()}`;
@@ -140,10 +147,29 @@ export default function Payment() {
               )}
             </button>
 
+            <label
+              htmlFor="agree-terms"
+              className="mt-6 flex items-start gap-3 p-4 rounded-2xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer"
+            >
+              <Checkbox
+                id="agree-terms"
+                checked={agreedTerms}
+                onCheckedChange={(v) => setAgreedTerms(v === true)}
+                className="mt-0.5 h-5 w-5"
+              />
+              <span className="text-sm leading-relaxed">
+                I have read and agree to the{" "}
+                <Link to="/terms" className="text-primary font-medium underline underline-offset-2 hover:opacity-80">
+                  Terms & Conditions
+                </Link>{" "}
+                of Sathya Mahal.
+              </span>
+            </label>
+
             <Button
               onClick={sendToWhatsApp}
-              disabled={!file}
-              className="w-full mt-6 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-base font-medium shadow-gold disabled:opacity-50"
+              disabled={!file || !agreedTerms}
+              className="w-full mt-4 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-base font-medium shadow-gold disabled:opacity-50"
             >
               <MessageCircle className="h-5 w-5 mr-2" />
               Send to WhatsApp & Confirm
