@@ -12,6 +12,7 @@ export interface BookingState {
   decoration: SelectedItem[];
   catering: { meal: SelectedItem | null; guests: number };
   addons: SelectedItem[];
+  extras: SelectedItem[];
   ebUnits: number;
   gasKg: number;
 }
@@ -19,7 +20,7 @@ export interface BookingState {
 interface Ctx {
   state: BookingState;
   set: <K extends keyof BookingState>(k: K, v: BookingState[K]) => void;
-  toggleItem: (key: "decoration" | "addons", item: SelectedItem) => void;
+  toggleItem: (key: "decoration" | "addons" | "extras", item: SelectedItem) => void;
   total: number;
   reset: () => void;
 }
@@ -34,6 +35,7 @@ const initial: BookingState = {
   decoration: [],
   catering: { meal: null, guests: 100 },
   addons: [],
+  extras: [],
   ebUnits: 0,
   gasKg: 0,
 };
@@ -44,7 +46,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<BookingState>(initial);
   const set = <K extends keyof BookingState>(k: K, v: BookingState[K]) =>
     setState(s => ({ ...s, [k]: v }));
-  const toggleItem = (key: "decoration" | "addons", item: SelectedItem) => {
+  const toggleItem = (key: "decoration" | "addons" | "extras", item: SelectedItem) => {
     setState(s => {
       const list = s[key];
       const exists = list.find(i => i.id === item.id);
@@ -57,6 +59,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     state.decoration.reduce((a, b) => a + b.price, 0) +
     (state.catering.meal ? state.catering.meal.price * state.catering.guests : 0) +
     state.addons.reduce((a, b) => a + b.price, 0) +
+    state.extras.reduce((a, b) => a + b.price, 0) +
     state.ebUnits * 30 +
     state.gasKg * 220;
 

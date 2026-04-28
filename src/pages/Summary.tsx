@@ -28,6 +28,7 @@ export default function Summary() {
   if (state.decoration.length) lines.push({ label: "Decoration", value: state.decoration.map(d => `${d.name} (₹${d.price.toLocaleString()})`).join(", ") });
   if (state.catering.meal) lines.push({ label: "Catering", value: `${state.catering.meal.name} × ${state.catering.guests} = ₹${(state.catering.meal.price * state.catering.guests).toLocaleString()}` });
   if (state.addons.length) lines.push({ label: "Add-ons", value: state.addons.map(a => `${a.name} (₹${a.price.toLocaleString()})`).join(", ") });
+  if (state.extras.length) lines.push({ label: "Extras", value: state.extras.map(a => `${a.name}`).join(", ") });
   if (state.ebUnits) lines.push({ label: "EB Units", value: `${state.ebUnits} × ₹30 = ₹${(state.ebUnits * 30).toLocaleString()}` });
   if (state.gasKg) lines.push({ label: "Gas", value: `${state.gasKg}kg × ₹220 = ₹${(state.gasKg * 220).toLocaleString()}` });
 
