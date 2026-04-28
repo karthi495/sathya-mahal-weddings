@@ -82,36 +82,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHY US */}
+      {/* FEATURE SHOWCASE */}
       <section className="bg-secondary/40 py-24">
-        <div className="container grid lg:grid-cols-2 gap-12 items-center">
-          <motion.img
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            src={decor}
-            alt="Sathya Mahal mandap decoration"
-            loading="lazy"
-            className="rounded-3xl shadow-soft"
-          />
-          <div>
-            <SectionTitle eyebrow="Why Sathya Mahal" title="Crafted For Your Big Day" />
-            <div className="grid grid-cols-2 gap-5">
-              {features.map((f, i) => (
-                <motion.div
-                  key={f.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3"
-                >
-                  <div className="p-3 rounded-xl bg-gradient-gold text-primary-foreground"><f.icon className="h-5 w-5" /></div>
-                  <p className="font-medium">{f.label}</p>
-                </motion.div>
-              ))}
-            </div>
+        <div className="container">
+          <SectionTitle eyebrow="Why Sathya Mahal" title="Crafted For Your Big Day" subtitle="Premium amenities designed for unforgettable celebrations." />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {showcase.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="group relative overflow-hidden rounded-3xl shadow-soft hover:shadow-gold transition-shadow duration-500 aspect-[3/4]"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  width={1024}
+                  height={1280}
+                  className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-center">
+                  <div className="inline-block w-10 h-px bg-primary-glow mb-3" />
+                  <h3 className="font-serif text-xl md:text-2xl text-white leading-snug drop-shadow-md">
+                    {item.title}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
