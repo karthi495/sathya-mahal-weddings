@@ -21,12 +21,6 @@ const plans = [
   { name: "Evening", time: "4 PM – 10 PM", price: "₹30,000+" },
   { name: "Morning", time: "5 AM – 2 PM", price: "₹30,000+" },
 ];
-const features = [
-  { icon: Wind, label: "Fully AC Hall" },
-  { icon: UtensilsCrossed, label: "Premium Dining" },
-  { icon: Car, label: "Spacious Parking" },
-  { icon: Users, label: "1000+ Capacity" },
-];
 const testimonials = [
   { name: "Priya & Arjun", text: "Our wedding was absolutely magical at Sathya Mahal. Every detail was perfect.", rating: 5 },
   { name: "Lakshmi Family", text: "Beautiful hall, exceptional service. Our guests are still talking about it!", rating: 5 },
