@@ -14,6 +14,7 @@ import Catering from "./pages/Catering";
 import Addons from "./pages/Addons";
 import Summary from "./pages/Summary";
 import Payment from "./pages/Payment";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/addons" element={<Addons />} />
               <Route path="/summary" element={<Summary />} />
               <Route path="/payment" element={<Payment />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
