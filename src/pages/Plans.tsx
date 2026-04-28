@@ -1,11 +1,18 @@
 import { motion } from "framer-motion";
-import { Check, Crown } from "lucide-react";
+import { Check, Crown, Zap, Sparkles, Flame, Power } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
 import { useTransitionNav } from "@/hooks/useTransitionNav";
 import PageLoader from "@/components/PageLoader";
 import { toast } from "sonner";
+
+const extras = [
+  { icon: Zap, label: "Electricity (EB)", price: "₹30", unit: "/ unit" },
+  { icon: Sparkles, label: "Cleaning Charges", price: "₹5,000", unit: "flat" },
+  { icon: Flame, label: "Gas Charges", price: "₹220", unit: "/ kg" },
+  { icon: Power, label: "Generator", price: "₹2,500", unit: "/ hr" },
+];
 
 const plans = [
   { id: "full", name: "Full Day Plan", time: "4 PM – Next Day 2 PM", price: 55000, breakdown: "₹55,000 + ₹7,000 + ₹12,000", featured: true,
