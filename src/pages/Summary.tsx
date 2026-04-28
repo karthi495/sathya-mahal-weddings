@@ -4,10 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
-import { MessageCircle } from "lucide-react";
+import { CreditCard } from "lucide-react";
+import { useTransitionNav } from "@/hooks/useTransitionNav";
+import PageLoader from "@/components/PageLoader";
+import { toast } from "sonner";
 
 export default function Summary() {
   const { state, set, total } = useBooking();
+  const { loading, go } = useTransitionNav(700);
+
+  const proceed = () => {
+    if (!total) {
+      toast.error("Please select a plan and services first");
+      return;
+    }
+    go("/payment");
+  };
 
   const lines: { label: string; value: string }[] = [];
   if (state.plan) lines.push({ label: "Plan", value: `${state.plan.name} — ₹${state.plan.price.toLocaleString()}` });
