@@ -45,7 +45,10 @@ export default function Catering() {
                 <p className="text-sm text-muted-foreground mb-4">{m.desc}</p>
                 <p className="font-serif text-3xl gold-text mb-4">₹{m.price}<span className="text-base text-muted-foreground"> / plate</span></p>
                 <Button
-                  onClick={() => set("catering", { ...state.catering, meal: { id: m.id, name: m.name, price: m.price } })}
+                  onClick={() => {
+                    set("catering", { ...state.catering, meal: { id: m.id, name: m.name, price: m.price } });
+                    navigate("/addons");
+                  }}
                   className={`w-full rounded-full ${sel ? "bg-accent" : "bg-gradient-gold"} text-primary-foreground hover:opacity-90`}
                 >
                   {sel ? "Selected ✓" : "Select Meal"}
