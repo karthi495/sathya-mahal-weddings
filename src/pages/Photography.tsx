@@ -45,7 +45,10 @@ export default function Photography() {
                 <div className="flex items-center justify-between">
                   <p className="font-serif text-3xl gold-text">₹{p.price.toLocaleString()}</p>
                   <Button
-                    onClick={() => set("photography", { id: p.id, name: p.name, price: p.price })}
+                    onClick={() => {
+                      set("photography", { id: p.id, name: p.name, price: p.price });
+                      navigate("/decoration");
+                    }}
                     className={`rounded-full ${selected ? "bg-accent" : "bg-gradient-gold"} text-primary-foreground hover:opacity-90`}
                   >
                     {selected ? "Selected ✓" : "Select"}
