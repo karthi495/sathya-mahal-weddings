@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
+import { useTransitionNav } from "@/hooks/useTransitionNav";
+import PageLoader from "@/components/PageLoader";
 import { toast } from "sonner";
 
 const plans = [
@@ -17,15 +18,16 @@ const plans = [
 
 export default function Plans() {
   const { state, set } = useBooking();
-  const navigate = useNavigate();
+  const { loading, go } = useTransitionNav(700);
 
   const select = (p: typeof plans[number]) => {
-    set("plan", { id: p.id, name: p.name, price: p.price });
     toast.success(`${p.name} selected`);
-    navigate("/photography");
+    go("/photography", () => set("plan", { id: p.id, name: p.name, price: p.price }));
   };
 
   return (
+    <>
+    <PageLoader show={loading} label="Loading Photography…" />
     <section className="container py-16 md:py-24">
       <SectionTitle eyebrow="Step 2" title="Hall Plans" subtitle="Select the timing that suits your celebration. Common: EB ₹30/unit, Gas ₹220/kg." />
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -67,5 +69,6 @@ export default function Plans() {
         })}
       </div>
     </section>
+    </>
   );
 }

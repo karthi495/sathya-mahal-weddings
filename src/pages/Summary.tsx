@@ -4,10 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
-import { MessageCircle } from "lucide-react";
+import { CreditCard } from "lucide-react";
+import { useTransitionNav } from "@/hooks/useTransitionNav";
+import PageLoader from "@/components/PageLoader";
+import { toast } from "sonner";
 
 export default function Summary() {
   const { state, set, total } = useBooking();
+  const { loading, go } = useTransitionNav(700);
+
+  const proceed = () => {
+    if (!total) {
+      toast.error("Please select a plan and services first");
+      return;
+    }
+    go("/payment");
+  };
 
   const lines: { label: string; value: string }[] = [];
   if (state.plan) lines.push({ label: "Plan", value: `${state.plan.name} — ₹${state.plan.price.toLocaleString()}` });
@@ -18,18 +30,10 @@ export default function Summary() {
   if (state.ebUnits) lines.push({ label: "EB Units", value: `${state.ebUnits} × ₹30 = ₹${(state.ebUnits * 30).toLocaleString()}` });
   if (state.gasKg) lines.push({ label: "Gas", value: `${state.gasKg}kg × ₹220 = ₹${(state.gasKg * 220).toLocaleString()}` });
 
-  const buildMessage = () => {
-    const services = [
-      state.plan?.name,
-      state.photography?.name,
-      ...state.decoration.map(d => d.name),
-      state.catering.meal && `${state.catering.meal.name} (${state.catering.guests} guests)`,
-      ...state.addons.map(a => a.name),
-    ].filter(Boolean).join(", ");
-    return `Hello, I want to book Sathya Mahal%0A%0AName: ${state.customerName || "-"}%0ADate: ${state.date ? state.date.toDateString() : "-"}%0APlan: ${state.plan?.name || "-"}%0AServices Selected: ${services || "-"}%0ATotal Cost: ₹${total.toLocaleString()}`;
-  };
 
   return (
+    <>
+    <PageLoader show={loading} label="Opening payment…" />
     <section className="container py-16 md:py-24">
       <SectionTitle eyebrow="Final Step" title="Booking Summary" subtitle="Review your selections and confirm via WhatsApp." />
 
@@ -73,17 +77,16 @@ export default function Summary() {
               <p className="text-xs uppercase tracking-[0.4em] opacity-70 mb-2">Final Total</p>
               <p className="font-serif text-5xl">₹{total.toLocaleString()}</p>
             </div>
-            <a
-              href={`https://wa.me/919999999999?text=${buildMessage()}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#20bd5a] transition-colors text-white px-6 py-4 rounded-full flex items-center gap-2 font-medium shadow-soft"
+            <Button
+              onClick={proceed}
+              className="bg-gradient-gold text-primary-foreground hover:opacity-90 px-6 py-6 rounded-full flex items-center gap-2 font-medium shadow-soft h-auto"
             >
-              <MessageCircle className="h-5 w-5" /> Confirm Booking
-            </a>
+              <CreditCard className="h-5 w-5" /> Confirm Booking
+            </Button>
           </div>
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

@@ -4,6 +4,8 @@ import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionTitle from "@/components/SectionTitle";
 import { useBooking } from "@/context/BookingContext";
+import { useTransitionNav } from "@/hooks/useTransitionNav";
+import PageLoader from "@/components/PageLoader";
 import photoImg from "@/assets/photography.jpg";
 
 const packages = [
@@ -16,8 +18,11 @@ const packages = [
 export default function Photography() {
   const { state, set } = useBooking();
   const navigate = useNavigate();
+  const { loading, go } = useTransitionNav(700);
 
   return (
+    <>
+    <PageLoader show={loading} label="Loading Decoration…" />
     <section className="container py-16 md:py-24">
       <SectionTitle eyebrow="Step 3" title="Photography Packages" subtitle="Preserve every emotion with our trusted artists." />
       <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -45,10 +50,9 @@ export default function Photography() {
                 <div className="flex items-center justify-between">
                   <p className="font-serif text-3xl gold-text">₹{p.price.toLocaleString()}</p>
                   <Button
-                    onClick={() => {
-                      set("photography", { id: p.id, name: p.name, price: p.price });
-                      navigate("/decoration");
-                    }}
+                    onClick={() =>
+                      go("/decoration", () => set("photography", { id: p.id, name: p.name, price: p.price }))
+                    }
                     className={`rounded-full ${selected ? "bg-accent" : "bg-gradient-gold"} text-primary-foreground hover:opacity-90`}
                   >
                     {selected ? "Selected ✓" : "Select"}
@@ -65,5 +69,6 @@ export default function Photography() {
         </Button>
       </div>
     </section>
+    </>
   );
 }
