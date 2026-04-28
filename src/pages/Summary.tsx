@@ -182,17 +182,26 @@ export default function Summary() {
           animate={{ opacity: 1, scale: 1 }}
           className="bg-gradient-luxe text-primary-foreground rounded-3xl p-8 shadow-gold"
         >
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
             <div>
               <p className="text-xs uppercase tracking-[0.4em] opacity-70 mb-2">Final Total</p>
               <p className="font-serif text-5xl">₹{total.toLocaleString()}</p>
             </div>
-            <Button
-              onClick={proceed}
-              className="bg-gradient-gold text-primary-foreground hover:opacity-90 px-6 py-6 rounded-full flex items-center gap-2 font-medium shadow-soft h-auto"
-            >
-              <CreditCard className="h-5 w-5" /> Confirm Booking
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={downloadPdf}
+                variant="outline"
+                className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground px-5 py-6 rounded-full flex items-center gap-2 font-medium h-auto backdrop-blur"
+              >
+                <Download className="h-5 w-5" /> Download Summary
+              </Button>
+              <Button
+                onClick={proceed}
+                className="bg-gradient-gold text-primary-foreground hover:opacity-90 px-6 py-6 rounded-full flex items-center gap-2 font-medium shadow-soft h-auto"
+              >
+                <CreditCard className="h-5 w-5" /> Confirm Booking
+              </Button>
+            </div>
           </div>
         </motion.div>
       </div>
