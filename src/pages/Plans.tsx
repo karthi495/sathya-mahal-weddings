@@ -41,9 +41,9 @@ export default function Plans() {
   return (
     <>
     <PageLoader show={loading} label="Loading Photography…" />
-    <section className="container py-16 md:py-24">
+    <section className="container py-12 md:py-24">
       <SectionTitle eyebrow="Step 2" title="Hall Plans" subtitle="Choose the perfect package for your celebration." />
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto">
         {plans.map((p, i) => {
           const selected = state.plan?.id === p.id;
           return (
@@ -54,27 +54,28 @@ export default function Plans() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -10 }}
-              className={`glass-card rounded-3xl p-8 relative transition-all ${
+              className={`glass-card rounded-3xl p-6 md:p-8 relative transition-all ${
                 p.featured ? "ring-2 ring-primary shadow-gold" : ""
               } ${selected ? "ring-2 ring-accent" : ""}`}
             >
               {p.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-gold text-primary-foreground text-xs px-4 py-1 rounded-full uppercase tracking-widest flex items-center gap-1">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-gold text-primary-foreground text-[11px] px-4 py-1.5 rounded-full uppercase tracking-widest flex items-center gap-1 shadow-gold">
                   <Crown className="h-3 w-3" /> Popular
                 </div>
               )}
-              <h3 className="font-serif text-3xl mb-2">{p.name}</h3>
-              <p className="text-muted-foreground text-sm mb-6">{p.time}</p>
-              <p className="font-serif text-5xl gold-text mb-1">₹{p.price.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground mb-6">{p.breakdown}</p>
-              <ul className="space-y-3 mb-8">
+              <h3 className="font-serif text-2xl md:text-3xl mb-2">{p.name}</h3>
+              <p className="text-muted-foreground text-sm mb-5 md:mb-6">{p.time}</p>
+              <p className="font-serif text-4xl md:text-5xl gold-text mb-1 leading-tight">₹{p.price.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground mb-5 md:mb-6 break-words">{p.breakdown}</p>
+              <ul className="space-y-2.5 md:space-y-3 mb-6 md:mb-8">
                 {p.features.map(f => (
-                  <li key={f} className="flex items-start gap-2 text-sm">
-                    <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />{f}
+                  <li key={f} className="flex items-start gap-2 text-sm md:text-[15px] leading-snug">
+                    <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <Button onClick={() => select(p)} className={`w-full rounded-full h-12 ${selected ? "bg-accent" : "bg-gradient-gold"} text-primary-foreground hover:opacity-90`}>
+              <Button onClick={() => select(p)} className={`w-full rounded-full h-14 text-base font-semibold ${selected ? "bg-accent" : "bg-gradient-gold"} text-primary-foreground hover:opacity-90`}>
                 {selected ? "Selected ✓" : "Select Plan"}
               </Button>
             </motion.div>
